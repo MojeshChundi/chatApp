@@ -18,6 +18,7 @@ const SignUp = (event) => {
       if (res.data.existedEmail) {
         window.alert("Email already existed try with another email!");
       } else {
+        window.alert(" user signed up successfully!");
         console.log(res.data);
       }
     })
