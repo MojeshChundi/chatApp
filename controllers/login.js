@@ -19,7 +19,6 @@ exports.login = async (req, res, next) => {
         }
         if (result === false) {
           res.status(401).json({ message: "wrong password!" });
-          //console.log("entered wrong password");
         }
         if (result === true) {
           res.status(201).json({
