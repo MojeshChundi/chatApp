@@ -70,7 +70,7 @@
           </li>
         </ul>
         <footer>
-          <textarea placeholder="Type your message"></textarea>
+          <textarea id="text" placeholder="Type your message"></textarea>
           <img
             src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/ico_picture.png"
             alt=""
@@ -79,9 +79,11 @@
             src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/ico_file.png"
             alt=""
           />
-          <a href="#">Send</a>
+          <button onclick="sendMessage(event)">Send</button>
         </footer>
       </main>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="chat.js"></script>
   </body>
 </html>

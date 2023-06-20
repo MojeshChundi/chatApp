@@ -9,7 +9,9 @@ const logIn = (event) => {
     .post("http://localhost:3000/login", data)
     .then((res) => {
       console.log(res.data);
+      localStorage.setItem("token", res.data.token);
       window.alert("login successfully!");
+      window.location.href = "http://localhost:3000/public/chat.html";
     })
     .catch((err) => {
       if (err.response.request.status === 401) {

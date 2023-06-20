@@ -1,5 +1,11 @@
 const bcrypt = require("bcrypt");
 const User = require("../models/signup");
+const jwt = require("jsonwebtoken");
+
+function generateJwtToken(id) {
+  const token = jwt.sign({ id: id }, process.env.JWT_KEY);
+  return token;
+}
 
 exports.login = async (req, res, next) => {
   const { email, password } = req.body;
@@ -23,6 +29,7 @@ exports.login = async (req, res, next) => {
         if (result === true) {
           res.status(201).json({
             message: "success",
+            token: generateJwtToken(user[0].id),
           });
         }
       });
