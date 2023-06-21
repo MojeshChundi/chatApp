@@ -19,18 +19,23 @@ exports.login = async (req, res, next) => {
     if (user.length === 0) {
       res.status(404).json({ message: "user does not exist!" });
     } else {
-      bcrypt.compare(password, user[0].password, function (err, result) {
-        if (err) {
-          console.log("bcrypt error!");
-        }
-        if (result === false) {
-          res.status(401).json({ message: "wrong password!" });
-        }
-        if (result === true) {
-          res.status(201).json({
-            message: "success",
-            token: generateJwtToken(user[0].id),
-          });
+      bcrypt.compare(password, user[0].password, async function (err, result) {
+        try {
+          if (err) {
+            console.log("bcrypt error!");
+          }
+          if (result === false) {
+            res.status(401).json({ message: "wrong password!" });
+          }
+          if (result === true) {
+            await User.update({ isLogin: true }, { where: { id: user[0].id } });
+            res.status(201).json({
+              message: "success",
+              token: generateJwtToken(user[0].id),
+            });
+          }
+        } catch (err) {
+          console.log(err);
         }
       });
     }

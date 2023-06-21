@@ -24,13 +24,3 @@ exports.signUp = async (req, res, next) => {
     console.log(err);
   }
 };
-
-exports.getusers = async (req, res, next) => {
-  try {
-    const users = await User.findAll({ attributes: ["name"] });
-    const messages = await Message.findAll({ attributes: ["content"] });
-    res.status(201).json({ users: users, messages: messages });
-  } catch (err) {
-    console.log(err);
-  }
-};

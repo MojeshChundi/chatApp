@@ -11,10 +11,6 @@ const Message = sequelize.define("message", {
     type: Sequelize.STRING,
     allowNull: false,
   },
-  createdAt: {
-    type: Sequelize.DATE,
-    defaultValue: Sequelize.NOW,
-  },
 });
 
 module.exports = Message;

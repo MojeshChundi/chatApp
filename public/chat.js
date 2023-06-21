@@ -13,6 +13,7 @@ const sendMessage = (event) => {
       console.log(err);
     });
 };
+
 window.addEventListener("DOMContentLoaded", () => {
   const token = localStorage.getItem("token");
   axios
@@ -20,14 +21,7 @@ window.addEventListener("DOMContentLoaded", () => {
     .then((res) => {
       console.log(res);
 
-      getusers(res.data.users, res.data.messages);
-      // const data = res.data.users;
-      // res.data.messages.forEach((message) => {
-      //   getmessages(message);
-      // });
-      // data.forEach((user) => {
-      //   getusers(user);
-      // });
+      getusers(res.data.users, res.data.messages, res.data.name);
     })
     .catch((err) => {
       console.log(err);
@@ -35,7 +29,7 @@ window.addEventListener("DOMContentLoaded", () => {
 });
 let HtmlOutput = document.getElementById("user");
 let HtmlOutput1 = document.getElementById("chat");
-function getusers(users, messages) {
+function getusers(users, messages, user) {
   users.forEach((user) => {
     let outPut = ` 
           <li>
@@ -60,7 +54,7 @@ function getusers(users, messages) {
     let outPut1 = `<li class="you">
             <div class="entete">
               <span class="status green"></span>
-              <h2>${users[0].name}</h2>
+              <h2>${user[0].name}</h2>
               <h3>10:12AM, Today</h3>
             </div>
             <div class="triangle"></div>
@@ -72,4 +66,18 @@ function getusers(users, messages) {
   });
 }
 
-function getmessages(message) {}
+const fetchdata = setInterval(() => {
+  const token = localStorage.getItem("token");
+  axios
+    .get("http://localhost:3000/getusers", { headers: { Auth: token } })
+    .then((res) => {
+      console.log(res);
+
+      getusers(res.data.users, res.data.messages, res.data.name);
+      HtmlOutput = "";
+      HtmlOutput1 = "";
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}, 1000);
