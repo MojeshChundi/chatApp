@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
 const User = require("../models/signup");
+const Message = require("../models/chat");
 
 exports.signUp = async (req, res, next) => {
   try {
@@ -19,6 +20,16 @@ exports.signUp = async (req, res, next) => {
         res.status(201).json({ data: data });
       });
     }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+exports.getusers = async (req, res, next) => {
+  try {
+    const users = await User.findAll({ attributes: ["name"] });
+    const messages = await Message.findAll({ attributes: ["content"] });
+    res.status(201).json({ users: users, messages: messages });
   } catch (err) {
     console.log(err);
   }
